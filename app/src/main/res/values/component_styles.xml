@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="GarmButtonColored">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="GarmTextEdit">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+</resources>
