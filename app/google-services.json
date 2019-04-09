@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "342243577977",
+    "firebase_url": "https://garm-1d35a.firebaseio.com",
+    "project_id": "garm-1d35a",
+    "storage_bucket": "garm-1d35a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342243577977:android:db99612e86507fe7",
+        "android_client_info": {
+          "package_name": "lexdikoy.garm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342243577977-tergnj3alp7mlnej9h56cr7ftgngqi5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lexdikoy.garm",
+            "certificate_hash": "40d6b1a2d51184d29e26a96ec1c0c299c1b3574b"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6fBShk7i67Pq9vj3mFtlkii9GIzRvkyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342243577977-414gdumu9cntillg7nrcs9bvjfhs7sme.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
