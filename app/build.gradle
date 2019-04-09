@@ -14,7 +14,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,4 +33,5 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
 }

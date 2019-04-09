@@ -33,13 +33,13 @@ public class LoginActivity extends BaseActivity {
         aUserEmail = (EditText) findViewById(R.id.auth_email);
         aUserPassword = (EditText) findViewById(R.id.auth_password);
         Button aLoginButton = (Button) findViewById(R.id.auth_login);
-        aLoginButton.setOnClickListener(authButtonClickListenert);
+        aLoginButton.setOnClickListener(authButtonClickListener);
         Button aForgotPassword = (Button) findViewById(R.id.auth_forgot_password);
-        aForgotPassword.setOnClickListener(authButtonClickListenert);
+        aForgotPassword.setOnClickListener(authButtonClickListener);
         initFirebase();
     }
 
-    private View.OnClickListener authButtonClickListenert = new View.OnClickListener() {
+    private View.OnClickListener authButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String email = aUserEmail.getText().toString();
@@ -64,9 +64,9 @@ public class LoginActivity extends BaseActivity {
             aUserEmail.setError("E-mail введен не корректно.");
             result = false;
         }
-        if (password.isEmpty()) {
+        if (password.length() < 6) {
             result = false;
-            aUserPassword.setError("Вы не указали пароль.");
+            aUserPassword.setError("Пароль должен содержать минимум 6 символов.");
         }
         return result;
     }

@@ -2,14 +2,20 @@ package lexdikoy.garm;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -25,6 +31,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     //Firebase
     protected FirebaseAuth mAuth;
     protected FirebaseUser currentUser;
+    protected FirebaseFirestore garmDataBase;
 
     public void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
@@ -32,7 +39,7 @@ abstract public class BaseActivity extends AppCompatActivity {
         if (currentUser != null) {
             StaticConfig.UID = currentUser.getUid();
         }
-
+        garmDataBase = FirebaseFirestore.getInstance();
     }
 
     public void showProgressDialog() {
@@ -104,5 +111,27 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     public void saveUserInfo() {
 
+    }
+
+    protected void updateUserDB(String uid, final Map<String, Object> user) {
+        initFirebase();
+        showProgressDialog();
+        garmDataBase.collection("users")
+                .document(uid)
+                .set(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            hideProgressDialog();
+                            toastMessage("Данные пользователя сохранены успешно");
+                        } else {
+                            hideProgressDialog();
+                            toastMessage(Objects.requireNonNull(task.getException()).getMessage());
+                        }
+
+
+                    }
+                });
     }
 }
