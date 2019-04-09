@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import lexdikoy.garm.UI.LoginActivity;
+import lexdikoy.garm.UI.RegisterActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,7 +63,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, LoginActivity.class));
+
             return true;
         }
 
@@ -76,9 +77,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.nav_gallery) {
-
+            startActivity(new Intent(this, RegisterActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
