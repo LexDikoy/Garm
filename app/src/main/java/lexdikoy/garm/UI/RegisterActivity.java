@@ -125,6 +125,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void registration(final View v) {
+        initFirebase();
         showProgressDialog();
 
         String email = rUserEmail.getText().toString();
@@ -142,6 +143,7 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            initFirebase();
                             updateUserDB(currentUser.getUid(), user);
                             updateUserAvatar(currentUser.getUid(), imageUri);
                             saveUserInfo();

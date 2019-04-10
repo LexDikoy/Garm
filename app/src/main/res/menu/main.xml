@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <group
+        android:id="@+id/unidentified_user"
+        android:visible="true">
+        <item
+            android:title="@string/button_login"
+            android:id="@+id/menu_auth_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+        <item
+            android:title="@string/button_register"
+            android:id="@+id/menu_reg_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+    </group>
+
+    <group
+        android:id="@+id/identified_user"
+        android:visible="true" >
+        <item
+            android:title="@string/button_my_account"
+            android:id="@+id/menu_my_account_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+        <item
+            android:title="@string/button_settings"
+            android:id="@+id/menu_settings_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+        <item
+            android:title="@string/button_logout"
+            android:id="@+id/menu_logout_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+    </group>
 </menu>

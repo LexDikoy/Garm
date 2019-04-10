@@ -56,15 +56,24 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menu_auth_button:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.menu_reg_button:
+                startActivity(new Intent(this, RegisterActivity.class));
+                break;
+            case R.id.menu_my_account_button:
+                break;
+            case R.id.menu_settings_button:
+                break;
+            case R.id.menu_logout_button:
+                showProgressDialog();
+                mAuth.signOut();
+                initFirebase();
+                hideProgressDialog();
+                toastMessage("Вы вышли.");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -77,9 +86,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            startActivity(new Intent(this, LoginActivity.class));
+
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(this, RegisterActivity.class));
+
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -95,7 +104,19 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        initFirebase();
+        if (currentUser != null) {
+            menu.setGroupVisible(R.id.unidentified_user, false);
+            menu.setGroupVisible(R.id.identified_user, true);
+        } else {
+            menu.setGroupVisible(R.id.unidentified_user, true);
+            menu.setGroupVisible(R.id.identified_user, false);
+        }
 
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 
 

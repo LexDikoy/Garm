@@ -14,6 +14,10 @@
     <string name="button_register">Зарегистрироваться</string>
     <string name="button_forgot_password">Восстановить пароль</string>
     <string name="button_select_image">Выбрать изображение</string>
+    <string name="button_my_account">Мой профиль</string>
+    <string name="button_settings">Настройки</string>
+    <string name="button_logout">Выйти</string>
+
     <!--inputs-->
     <string name="caption_alias">Псевдоним</string>
     <string name="caption_email">E-mail</string>
