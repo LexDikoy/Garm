@@ -7,9 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,8 +31,8 @@ public class RegisterActivity extends BaseActivity {
 
     private EditText rUserAlias, rUserEmail, rUserFirstName, rUserLastName, rUserPhoneNumber, rUserPassword, rUserRepeatPassword;
     private final int Pick_image = 1;
+    private Bitmap selectImage, littleSelectImage;
     private Uri imageUri;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +64,7 @@ public class RegisterActivity extends BaseActivity {
                     Intent choiceImage = new Intent(Intent.ACTION_GET_CONTENT);
                     choiceImage.setType("image/*");
                     choiceImage.addCategory(Intent.CATEGORY_OPENABLE);
-                    startActivityForResult(choiceImage, Pick_image);
+                    startActivityForResult(Intent.createChooser(choiceImage, "Выбрать фотографию"), Pick_image);
                     break;
                 case R.id.reg_button:
                     if (validate()) {
@@ -139,6 +135,7 @@ public class RegisterActivity extends BaseActivity {
         user.put("first_name", rUserFirstName.getText().toString());
         user.put("last_name", rUserLastName.getText().toString());
         user.put("phone_number", rUserPhoneNumber.getText().toString());
+        user.put("image_base64", encodeBase64(littleSelectImage));
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -146,6 +143,7 @@ public class RegisterActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             updateUserDB(currentUser.getUid(), user);
+                            updateUserAvatar(currentUser.getUid(), imageUri);
                             saveUserInfo();
                             hideProgressDialog();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
@@ -168,9 +166,9 @@ public class RegisterActivity extends BaseActivity {
                 if(resultCode == RESULT_OK){
                     try {
                         imageUri = data.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        rAvatar.setImageBitmap(selectedImage);
+                        selectImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                        littleSelectImage = makeImageLite(getContentResolver().openInputStream(imageUri), selectImage.getWidth(), selectImage.getHeight(), AVATAR_WIDTH, AVATAR_HEIGHT);
+                        rAvatar.setImageBitmap(littleSelectImage);
                     } catch (FileNotFoundException e) {
                         toastMessage(e.getMessage());
                     }

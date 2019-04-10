@@ -1,9 +1,16 @@
 package lexdikoy.garm;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -13,7 +20,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -28,10 +40,14 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     public ProgressDialog mProgressDialog;
 
+    public static final int AVATAR_WIDTH = 128;
+    public static final int AVATAR_HEIGHT = 128;
+
     //Firebase
     protected FirebaseAuth mAuth;
     protected FirebaseUser currentUser;
     protected FirebaseFirestore garmDataBase;
+    protected StorageReference garmStorage;
 
     public void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
@@ -40,6 +56,7 @@ abstract public class BaseActivity extends AppCompatActivity {
             StaticConfig.UID = currentUser.getUid();
         }
         garmDataBase = FirebaseFirestore.getInstance();
+        garmStorage = FirebaseStorage.getInstance().getReference();
     }
 
     public void showProgressDialog() {
@@ -129,9 +146,60 @@ abstract public class BaseActivity extends AppCompatActivity {
                             hideProgressDialog();
                             toastMessage(Objects.requireNonNull(task.getException()).getMessage());
                         }
-
-
                     }
                 });
     }
+
+    protected void updateUserAvatar(String uid, Uri file) {
+        initFirebase();
+        showProgressDialog();
+        garmStorage
+                .child("users_avatar/" + uid + ".jpg")
+                .putFile(file)
+                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            hideProgressDialog();
+                            toastMessage("Изображение сохранено");
+                        } else {
+                            hideProgressDialog();
+                            toastMessage(task.getException().getMessage());
+                        }
+                    }
+                });
+    }
+
+    public static Bitmap makeImageLite(InputStream is, int width, int height, int reqWidth, int reqHeight) {
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = inSampleSize;
+
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(is, null, options);
+    }
+
+    public static String encodeBase64(Bitmap imgBitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        imgBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+
+
+
+
+
 }
