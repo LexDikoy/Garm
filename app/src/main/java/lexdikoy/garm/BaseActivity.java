@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -46,8 +48,12 @@ abstract public class BaseActivity extends AppCompatActivity {
     //Firebase
     protected FirebaseAuth mAuth;
     protected FirebaseUser currentUser;
-    protected FirebaseFirestore garmDataBase;
+
+    protected FirebaseFirestore garmFirestore;
     protected StorageReference garmStorage;
+
+    protected FirebaseDatabase garmFirebaseRealTimeDataBase;
+    protected DatabaseReference garmDataBaseReference;
 
     public void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
@@ -55,8 +61,11 @@ abstract public class BaseActivity extends AppCompatActivity {
         if (currentUser != null) {
             StaticConfig.UID = currentUser.getUid();
         }
-        garmDataBase = FirebaseFirestore.getInstance();
+        garmFirestore = FirebaseFirestore.getInstance();
         garmStorage = FirebaseStorage.getInstance().getReference();
+
+        garmFirebaseRealTimeDataBase = FirebaseDatabase.getInstance();
+        garmDataBaseReference = garmFirebaseRealTimeDataBase.getReference();
     }
 
     public void showProgressDialog() {
@@ -130,12 +139,11 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void updateUserDB(String uid, final Map<String, Object> user) {
+    protected void updateUserDB(final Map<String, Object> user) {
         initFirebase();
         showProgressDialog();
-        garmDataBase.collection("users")
-                .document(uid)
-                .set(user)
+        garmDataBaseReference.child("users/" + currentUser.getUid())
+                .setValue(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

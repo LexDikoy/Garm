@@ -144,7 +144,7 @@ public class RegisterActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             initFirebase();
-                            updateUserDB(currentUser.getUid(), user);
+                            updateUserDB(user);
                             updateUserAvatar(currentUser.getUid(), imageUri);
                             saveUserInfo();
                             hideProgressDialog();
