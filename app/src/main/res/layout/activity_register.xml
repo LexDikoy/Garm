@@ -61,111 +61,125 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
                             android:id="@+id/reg_alias"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_alias"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
                             android:id="@+id/reg_email"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_email"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
                             android:id="@+id/reg_first_name"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_first_name"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit"/>
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
                             android:id="@+id/reg_last_name"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_last_name"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
                             android:id="@+id/reg_phone_number"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/caption_phone_number"
-                            android:maxLines="1"
                             android:ems="10"
+                            android:hint="@string/caption_phone_number"
                             android:inputType="phone"
+                            android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <EditText
                             android:id="@+id/reg_password"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_password"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorBorder">
 
                         <EditText
                             android:id="@+id/reg_repeat_password"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_repeat_password"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:singleLine="true"
-                            style="@style/GarmTextEdit" />
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -183,13 +197,13 @@
                             android:maxWidth="70dp"
                             android:maxHeight="70dp"
                             android:src="@drawable/ico"
-                            app:siBorderColor="@color/colorPrimaryDark"
-                            app:siBorderWidth="2dp"
-                            />
+                            app:siBorderColor="@color/colorBorder"
+                            app:siBorderWidth="2dp" />
 
                         <Button
                             android:id="@+id/reg_choice_image_button"
                             style="@style/GarmButtonColored"
+                            android:background="@drawable/border_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -199,11 +213,12 @@
 
                     <Button
                         android:id="@+id/reg_button"
+                        style="@style/GarmButtonColored"
+                        android:background="@drawable/border_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/button_register"
-                        style="@style/GarmButtonColored" />
+                        android:text="@string/button_register" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

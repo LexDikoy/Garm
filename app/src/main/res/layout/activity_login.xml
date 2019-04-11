@@ -57,38 +57,43 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorBorder">
 
                         <AutoCompleteTextView
-                            style="@style/GarmTextEdit"
                             android:id="@+id/auth_email"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_email"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorBorder">
 
                         <EditText
-                            style="@style/GarmTextEdit"
                             android:id="@+id/auth_password"
+                            style="@style/GarmTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/caption_password"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:backgroundTint="@color/colorBorder" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <Button
                         android:id="@+id/auth_login"
+                        android:background="@drawable/border_button"
                         style="@style/GarmButtonColored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,6 +102,7 @@
 
                     <Button
                         android:id="@+id/auth_forgot_password"
+                        android:background="@drawable/border_button"
                         style="@style/GarmButtonColored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
