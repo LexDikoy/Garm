@@ -70,7 +70,7 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     public void showProgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
             mProgressDialog.setMessage("Загрузка");
             mProgressDialog.setIndeterminate(true);
         }

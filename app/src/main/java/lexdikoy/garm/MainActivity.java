@@ -1,25 +1,37 @@
 package lexdikoy.garm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import lexdikoy.garm.ImageViews.CircularImageView;
+import lexdikoy.garm.Model.User;
 import lexdikoy.garm.UI.LoginActivity;
 import lexdikoy.garm.UI.RegisterActivity;
+import lexdikoy.garm.UI.UserProfile;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public String avata;
-    ImageView avatar;
-    private static final int PICK_IMAGE = 1;
 
+    UserProfile userProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +47,8 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        userProfile = new UserProfile(navigationView);
     }
 
     @Override
@@ -71,6 +85,7 @@ public class MainActivity extends BaseActivity
                 showProgressDialog();
                 mAuth.signOut();
                 initFirebase();
+                userProfile.initUpdateUserProfile();
                 hideProgressDialog();
                 toastMessage("Вы вышли.");
                 break;
@@ -86,6 +101,7 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+showProgressDialog();
 
         } else if (id == R.id.nav_gallery) {
 
