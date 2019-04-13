@@ -23,4 +23,8 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="CardViewStyle">
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

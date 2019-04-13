@@ -2,34 +2,62 @@ package lexdikoy.garm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lexdikoy.garm.ImageViews.CircularImageView;
+import lexdikoy.garm.Model.Message;
 import lexdikoy.garm.Model.User;
+import lexdikoy.garm.Model.UserAdapter;
 import lexdikoy.garm.UI.LoginActivity;
 import lexdikoy.garm.UI.RegisterActivity;
 import lexdikoy.garm.UI.UserProfile;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    ImageButton sendMessage;
+    RecyclerView mRecyclerView;
+    public ArrayList<User> users = new ArrayList<User>();
+
+
+    RecyclerView mRecyclerViewNaviUsers;
+
 
     UserProfile userProfile;
     @Override
@@ -48,7 +76,80 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //navigationView.getMenu().setGroupVisible();
         userProfile = new UserProfile(navigationView);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerChat_list_cats);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewNaviUsers = (RecyclerView) findViewById(R.id.nav_recycler_users);
+        mRecyclerViewNaviUsers.setLayoutManager(new LinearLayoutManager(this));
+
+
+        sendMessage = (ImageButton) findViewById(R.id.btnSend);
+
+
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dis();
+
+            }
+        });
+
+        buildUsersList();
+
+    }
+
+    private void buildUsersList() {
+        initFirebase();
+        if (currentUser != null) {
+            garmDataBaseReference
+                    .child("users")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            users.clear();
+                            GenericTypeIndicator<String> indicator = new GenericTypeIndicator<String>(){};
+                            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                                if(!currentUser.getUid().equals(childDataSnapshot.getKey())) {
+
+                                    users.add(new User(childDataSnapshot.child("alias").getValue(indicator),
+                                            childDataSnapshot.child("email").getValue(indicator),
+                                            childDataSnapshot.child("first_name").getValue(indicator),
+                                            childDataSnapshot.child("last_name").getValue(indicator),
+                                            childDataSnapshot.child("phone_number").getValue(indicator),
+                                            childDataSnapshot.child("image_base64").getValue(indicator)));
+                                }
+                            }
+                            UserAdapter userAdapter = new UserAdapter(users);
+                            mRecyclerViewNaviUsers.setAdapter(userAdapter);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+    }
+
+    public void dis() {
+
+//        users.add(new User("Alex",
+//                "sasi@mail.ru",
+//                "Alex",
+//                "Cuz",
+//                "123",
+//                "ava1"));
+//
+//        UserAdapter userAdapter = new UserAdapter(users);
+//        mRecyclerView.setAdapter(userAdapter);
+//        mRecyclerViewNaviUsers.setAdapter(userAdapter);
+//
+//
+//
+//        mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
+//        mRecyclerViewNaviUsers.smoothScrollToPosition(mRecyclerViewNaviUsers.getAdapter().getItemCount() - 1);
+
     }
 
     @Override
@@ -100,18 +201,18 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-showProgressDialog();
+        if (id == R.id.nav_my_profile) {
+            showProgressDialog();
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_my_settings) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_planing) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_sig_in) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_sig_out) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_registration) {
 
         }
 
@@ -133,7 +234,5 @@ showProgressDialog();
 
         return super.onPrepareOptionsMenu(menu);
     }
-
-
 
 }

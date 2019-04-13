@@ -133,6 +133,7 @@ public class RegisterActivity extends BaseActivity {
 
         final Map<String, Object> user = new HashMap<>();
         user.put("alias", rUserAlias.getText().toString());
+        user.put("email", rUserEmail.getText().toString());
         user.put("first_name", rUserFirstName.getText().toString());
         user.put("last_name", rUserLastName.getText().toString());
         user.put("phone_number", rUserPhoneNumber.getText().toString());

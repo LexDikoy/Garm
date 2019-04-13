@@ -20,7 +20,7 @@ import lexdikoy.garm.R;
 public class UserProfile extends BaseActivity {
     private CircularImageView userAvatarDraw;
     private TextView userAliasView, userFirstLastNameView, userPhoneNumberView;
-    private User user = new User();
+    private User user = new User("", "","", "", "", "");
 
     public UserProfile(NavigationView headerNavigatorView) {
         userAvatarDraw = (CircularImageView) headerNavigatorView.getHeaderView(0).findViewById(R.id.header_user_avatar);

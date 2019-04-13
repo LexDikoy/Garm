@@ -59,10 +59,11 @@
             android:layout_above="@id/btnSend"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerChat"
+            android:id="@+id/recyclerChat_list_cats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/btnSend">
+            android:layout_above="@id/btnSend"
+            android:background="@color/colorAccent">
 
         </android.support.v7.widget.RecyclerView>
 
