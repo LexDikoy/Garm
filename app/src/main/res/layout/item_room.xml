@@ -7,7 +7,7 @@
 
 
     <android.support.v7.widget.CardView
-        android:id="@+id/user_card_view"
+        android:id="@+id/room_card_view"
         style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,34 +25,17 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <lexdikoy.garm.ImageViews.CircularImageView
-                android:id="@+id/card_avatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:maxWidth="40dp"
-                android:maxHeight="40dp"
-                android:src="@drawable/ico"
-                app:siBorderColor="@color/colorBorder"
-                app:siBorderWidth="2dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="90dp"
+                android:layout_marginRight="45dp"
                 android:layout_toStartOf="@id/card_room_in"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/card_alias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/card_first_last_name"
+                    android:id="@+id/card_room_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
@@ -61,25 +44,13 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/card_btn_profile"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentBottom="false"
-                android:layout_gravity="end"
-                android:layout_marginLeft="-90dp"
-                android:background="@drawable/border_button"
-                android:scaleType="centerInside"
-                android:src="@drawable/ico_profile" />
-
-            <ImageButton
-                android:id="@+id/card_btn_send_message"
+                android:id="@+id/card_room_in"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="end"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="-45dp"
                 android:background="@drawable/border_button"
                 android:scaleType="centerInside"
                 android:src="@drawable/ico_send_message2" />

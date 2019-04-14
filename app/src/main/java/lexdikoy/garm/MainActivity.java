@@ -38,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import lexdikoy.garm.Model.Room;
+import lexdikoy.garm.Model.RoomAdapter;
 import lexdikoy.garm.Model.User;
 import lexdikoy.garm.Model.UserAdapter;
 import lexdikoy.garm.UI.LoginActivity;
@@ -50,8 +52,9 @@ public class MainActivity extends BaseActivity
 
     public ArrayList<User> users = new ArrayList<User>();
 
-
+    public ArrayList<Room> rooms = new ArrayList<Room>();
     RecyclerView mRecyclerUsersList;
+    RecyclerView mRecyclerRoomsList;
     NavigationView navigationView;
 
 
@@ -77,8 +80,11 @@ public class MainActivity extends BaseActivity
         mRecyclerUsersList = (RecyclerView) findViewById(R.id.recycler_users_list);
         mRecyclerUsersList.setLayoutManager(new LinearLayoutManager(this));
 
+        mRecyclerRoomsList = (RecyclerView) findViewById(R.id.recycler_rooms_list);
+        mRecyclerRoomsList.setLayoutManager(new LinearLayoutManager(this));
 
         buildUsersList();
+        buildRoomsList();
         renderNavigator();
 
     }
@@ -94,6 +100,40 @@ public class MainActivity extends BaseActivity
         }
 
     }
+
+    private void buildRoomsList() {
+        initFirebase();
+
+        if(currentUser!=null) {
+            garmDataBaseReference
+                    .child("rooms")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            rooms.clear();
+                            GenericTypeIndicator<String> indicator = new GenericTypeIndicator<String>(){};
+                            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                                rooms.add(new Room(
+                                        childDataSnapshot.getKey(),
+                                        childDataSnapshot.child("room_name").getValue(indicator),
+                                        childDataSnapshot.child("room_members").getValue(indicator),
+                                        childDataSnapshot.child("room_master").getValue(indicator)
+                                ));
+                            }
+                            RoomAdapter roomAdapter = new RoomAdapter(rooms, MainActivity.this);
+                            mRecyclerRoomsList.setAdapter(roomAdapter);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+    }
+
+
     private void buildUsersList() {
         initFirebase();
         if (currentUser != null) {

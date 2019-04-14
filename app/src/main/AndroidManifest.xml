@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".UI.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lexdikoy.garm.MainActivity" />
+        </activity>
+        <activity
             android:name=".UI.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".MainActivity"

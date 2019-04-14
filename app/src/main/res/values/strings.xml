@@ -28,5 +28,6 @@
     <string name="caption_password">Пароль</string>
     <string name="caption_repeat_password">Повторите пароль</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 </resources>
