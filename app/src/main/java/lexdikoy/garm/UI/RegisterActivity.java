@@ -119,9 +119,7 @@ public class RegisterActivity extends BaseActivity {
             rUserRepeatPassword.setError("Пароли не совпадают.");
             result = false;
         }
-
         return result;
-
     }
 
     private void registration(final View v) {

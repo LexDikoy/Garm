@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import lexdikoy.garm.ImageViews.CircularImageView;
 import lexdikoy.garm.R;
 
-public class User {
+public class User implements Serializable {
+    public String userUID;
     public String alias;
     public String email;
     public String firstName;
@@ -23,13 +25,22 @@ public class User {
     public String phoneNumber;
     public String avatar64;
 
-    public User(String alias, String email, String firstName, String lastName, String phoneNumber, String avatar64) {
+    public User(String userUID, String alias, String email, String firstName, String lastName, String phoneNumber, String avatar64) {
+        this.userUID = userUID;
         this.alias = alias;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.avatar64 = avatar64;
+    }
+
+    public String getUserUID() {
+        return userUID;
+    }
+
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
     }
 
     public String getAlias() {

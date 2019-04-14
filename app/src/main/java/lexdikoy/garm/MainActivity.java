@@ -37,10 +37,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import lexdikoy.garm.ImageViews.CircularImageView;
-import lexdikoy.garm.Model.Message;
 import lexdikoy.garm.Model.User;
 import lexdikoy.garm.Model.UserAdapter;
 import lexdikoy.garm.UI.LoginActivity;
@@ -51,12 +48,10 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton sendMessage;
-    RecyclerView mRecyclerView;
     public ArrayList<User> users = new ArrayList<User>();
 
 
-    RecyclerView mRecyclerViewNaviUsers;
+    RecyclerView mRecyclerUsersList;
 
 
     UserProfile userProfile;
@@ -79,22 +74,9 @@ public class MainActivity extends BaseActivity
         //navigationView.getMenu().setGroupVisible();
         userProfile = new UserProfile(navigationView);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerChat_list_cats);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerViewNaviUsers = (RecyclerView) findViewById(R.id.nav_recycler_users);
-        mRecyclerViewNaviUsers.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerUsersList = (RecyclerView) findViewById(R.id.recycler_users_list);
+        mRecyclerUsersList.setLayoutManager(new LinearLayoutManager(this));
 
-
-        sendMessage = (ImageButton) findViewById(R.id.btnSend);
-
-
-        sendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dis();
-
-            }
-        });
 
         buildUsersList();
 
@@ -113,7 +95,8 @@ public class MainActivity extends BaseActivity
                             for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                                 if(!currentUser.getUid().equals(childDataSnapshot.getKey())) {
 
-                                    users.add(new User(childDataSnapshot.child("alias").getValue(indicator),
+                                    users.add(new User(childDataSnapshot.getKey(),
+                                            childDataSnapshot.child("alias").getValue(indicator),
                                             childDataSnapshot.child("email").getValue(indicator),
                                             childDataSnapshot.child("first_name").getValue(indicator),
                                             childDataSnapshot.child("last_name").getValue(indicator),
@@ -121,8 +104,9 @@ public class MainActivity extends BaseActivity
                                             childDataSnapshot.child("image_base64").getValue(indicator)));
                                 }
                             }
-                            UserAdapter userAdapter = new UserAdapter(users);
-                            mRecyclerViewNaviUsers.setAdapter(userAdapter);
+
+                            UserAdapter userAdapter = new UserAdapter(users, MainActivity.this);
+                            mRecyclerUsersList.setAdapter(userAdapter);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {

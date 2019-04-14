@@ -17,6 +17,7 @@
     <string name="button_my_account">Мой профиль</string>
     <string name="button_settings">Настройки</string>
     <string name="button_logout">Выйти</string>
+    <string name="button_save">Сохранить</string>
 
     <!--inputs-->
     <string name="caption_alias">Псевдоним</string>
@@ -26,5 +27,6 @@
     <string name="caption_phone_number">Телефон</string>
     <string name="caption_password">Пароль</string>
     <string name="caption_repeat_password">Повторите пароль</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
 
 </resources>
