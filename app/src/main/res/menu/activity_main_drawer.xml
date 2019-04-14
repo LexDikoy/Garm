@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group />
+    <group android:checkableBehavior="single"
+        android:id="@+id/identified_user_drawer">
         <item
             android:id="@+id/nav_my_profile"
             android:icon="@drawable/ico_profile"
@@ -16,23 +18,26 @@
             android:id="@+id/nav_planing"
             android:icon="@drawable/ico_plan"
             android:title="Планирование" />
+        <item
+            android:id="@+id/nav_sig_out"
+            android:icon="@drawable/ico_logout"
+            android:title="Выход" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_sig_in"
-                android:icon="@drawable/ico_login"
-                android:title="Вход" />
-            <item
-                android:id="@+id/nav_sig_out"
-                android:icon="@drawable/ico_logout"
-                android:title="Выход" />
-            <item
-                android:id="@+id/nav_registration"
-                android:icon="@drawable/ico_registration"
-                android:title="Регистрация" />
-        </menu>
-    </item>
+
+        <group android:title="Communicate"
+            android:id="@+id/unidentified_user_drawer">
+
+                <item
+                    android:id="@+id/nav_sig_in"
+                    android:icon="@drawable/ico_login"
+                    android:title="Вход" />
+                <item
+                    android:id="@+id/nav_registration"
+                    android:icon="@drawable/ico_registration"
+                    android:title="Регистрация" />
+
+        </group>
+
 
 </menu>

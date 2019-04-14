@@ -52,9 +52,9 @@ public class MainActivity extends BaseActivity
 
 
     RecyclerView mRecyclerUsersList;
+    NavigationView navigationView;
 
 
-    UserProfile userProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //navigationView.getMenu().setGroupVisible();
@@ -79,9 +79,21 @@ public class MainActivity extends BaseActivity
 
 
         buildUsersList();
+        renderNavigator();
 
     }
 
+    private void renderNavigator() {
+        initFirebase();
+        if(currentUser != null) {
+            navigationView.getMenu().setGroupVisible(R.id.identified_user_drawer, true);
+            navigationView.getMenu().setGroupVisible(R.id.unidentified_user_drawer, false);
+        } else {
+            navigationView.getMenu().setGroupVisible(R.id.identified_user_drawer, false);
+            navigationView.getMenu().setGroupVisible(R.id.unidentified_user_drawer, true);
+        }
+
+    }
     private void buildUsersList() {
         initFirebase();
         if (currentUser != null) {
@@ -116,26 +128,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    public void dis() {
-
-//        users.add(new User("Alex",
-//                "sasi@mail.ru",
-//                "Alex",
-//                "Cuz",
-//                "123",
-//                "ava1"));
-//
-//        UserAdapter userAdapter = new UserAdapter(users);
-//        mRecyclerView.setAdapter(userAdapter);
-//        mRecyclerViewNaviUsers.setAdapter(userAdapter);
-//
-//
-//
-//        mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
-//        mRecyclerViewNaviUsers.smoothScrollToPosition(mRecyclerViewNaviUsers.getAdapter().getItemCount() - 1);
-
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,22 +149,17 @@ public class MainActivity extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_auth_button:
-                startActivity(new Intent(this, LoginActivity.class));
+
                 break;
             case R.id.menu_reg_button:
-                startActivity(new Intent(this, RegisterActivity.class));
+
                 break;
             case R.id.menu_my_account_button:
                 break;
             case R.id.menu_settings_button:
                 break;
             case R.id.menu_logout_button:
-                showProgressDialog();
-                mAuth.signOut();
-                initFirebase();
-                userProfile.initUpdateUserProfile();
-                hideProgressDialog();
-                toastMessage("Вы вышли.");
+
                 break;
         }
 
@@ -182,22 +169,28 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_my_profile) {
-            showProgressDialog();
-
-        } else if (id == R.id.nav_my_settings) {
-
-        } else if (id == R.id.nav_planing) {
-
-        } else if (id == R.id.nav_sig_in) {
-
-        } else if (id == R.id.nav_sig_out) {
-
-        } else if (id == R.id.nav_registration) {
-
+        switch (item.getItemId()) {
+            case R.id.nav_my_profile:
+                break;
+            case R.id.nav_my_settings:
+                break;
+            case R.id.nav_planing:
+                break;
+            case R.id.nav_sig_in:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.nav_sig_out:
+                showProgressDialog();
+                mAuth.signOut();
+                initFirebase();
+                userProfile.initUpdateUserProfile();
+                hideProgressDialog();
+                renderNavigator();
+                toastMessage("Вы вышли.");
+                break;
+            case R.id.nav_registration:
+                startActivity(new Intent(this, RegisterActivity.class));
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

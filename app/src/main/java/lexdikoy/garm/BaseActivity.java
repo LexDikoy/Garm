@@ -33,10 +33,11 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import lexdikoy.garm.UI.UserProfile;
 import lexdikoy.garm.data.StaticConfig;
 
 abstract public class BaseActivity extends AppCompatActivity {
-
+    UserProfile userProfile;
     public final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
