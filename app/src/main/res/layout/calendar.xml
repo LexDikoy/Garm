@@ -5,7 +5,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal" >
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="460dp"
+        android:textColorHint="@color/colorBorder">
+
+        <AutoCompleteTextView
+            android:id="@+id/reg_first_name2"
+            style="@style/GarmTextEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorBorder"
+            android:hint="@string/caption_first_name"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="535dp" >
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="410dp"
+        android:text="Кнопка" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,12 +53,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="55dp" >
+        android:layout_marginTop="65dp" >
 
         <CalendarView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/calendar" />
+            android:onClick="onClick"
+            android:id="@+id/CalendarView" />
 
     </LinearLayout>
 
