@@ -1,7 +1,10 @@
 package lexdikoy.garm;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +21,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +43,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import lexdikoy.garm.Model.Room;
 import lexdikoy.garm.Model.RoomAdapter;
@@ -45,6 +52,7 @@ import lexdikoy.garm.Model.UserAdapter;
 import lexdikoy.garm.UI.LoginActivity;
 import lexdikoy.garm.UI.RegisterActivity;
 import lexdikoy.garm.UI.UserProfile;
+import lexdikoy.garm.UI.UserProfileActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -211,6 +219,43 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_my_profile:
+                initFirebase();
+
+                if (currentUser != null) {
+                    garmDataBaseReference
+                            .child("users/" + currentUser.getUid())
+                            .addValueEventListener(new ValueEventListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    initFirebase();
+                                    GenericTypeIndicator<String> stringIndicator = new GenericTypeIndicator<String>(){};
+
+                                    Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                                    intent.putExtra(User.class.getSimpleName(), new User(
+
+                                            dataSnapshot.getKey(),
+                                            dataSnapshot.child("alias").getValue(stringIndicator),
+                                            dataSnapshot.child("email").getValue(stringIndicator),
+                                            dataSnapshot.child("first_name").getValue(stringIndicator),
+                                            dataSnapshot.child("last_name").getValue(stringIndicator),
+                                            dataSnapshot.child("phone_number").getValue(stringIndicator),
+                                            dataSnapshot.child("image_base64").getValue(stringIndicator)
+
+                                    ));
+
+                                    startActivity(intent);
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                }
+
+
+
+
+
                 break;
             case R.id.nav_my_settings:
                 break;
