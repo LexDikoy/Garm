@@ -18,7 +18,8 @@
     <string name="button_settings">Настройки</string>
     <string name="button_logout">Выйти</string>
     <string name="button_save">Сохранить</string>
-
+    <string name="button_delete_room">Удалить комнату</string>
+    <string name="button_rename">Изменить имя</string>
     <!--inputs-->
     <string name="caption_alias">Псевдоним</string>
     <string name="caption_email">E-mail</string>

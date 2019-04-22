@@ -16,7 +16,6 @@ import lexdikoy.garm.UI.ChatActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     public ArrayList<Room> rooms;
     public Context context;

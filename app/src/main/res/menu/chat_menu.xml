@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/this_room_master"
+        android:visible="true">
+        <item
+            android:title="@string/button_rename"
+            android:id="@+id/menu_rename_room_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+        <item
+            android:title="@string/button_delete_room"
+            android:id="@+id/menu_delete_room_button"
+            app:showAsAction="never"
+            android:orderInCategory="100"/>
+    </group>
+
+</menu>

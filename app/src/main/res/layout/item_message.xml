@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout_message"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="45dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/room_card_view"
@@ -18,6 +20,7 @@
         app:cardBackgroundColor="@color/colorPrimaryDark">
 
         <LinearLayout
+            android:id="@+id/avatar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
@@ -36,6 +39,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/message_content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
@@ -43,15 +47,11 @@
             android:paddingRight="45dp">
 
             <LinearLayout
+                android:id="@+id/message_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/my_message_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent" />
+                android:orientation="vertical"
+                android:gravity="right">
 
                 <TextView
                     android:id="@+id/my_message_first_last_name"
@@ -59,13 +59,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/my_message_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="10dp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/my_message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:gravity="left"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

@@ -43,8 +43,11 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
+import lexdikoy.garm.Model.Message;
 import lexdikoy.garm.Model.Room;
 import lexdikoy.garm.Model.RoomAdapter;
 import lexdikoy.garm.Model.User;
@@ -193,10 +196,28 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    private void createRoom() {
+        initFirebase();
+        if (currentUser == null) {
+            return;
+        }
+
+        final Map<String, Object> new_room = new HashMap<>();
+        new_room.put("room_master", currentUser.getUid());
+        new_room.put("room_members", "all");
+        new_room.put("room_name", "test");
+
+        garmDataBaseReference
+                .child("rooms")
+                .push()
+                .setValue(new_room);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_auth_button:
+
 
                 break;
             case R.id.menu_reg_button:
@@ -205,6 +226,7 @@ public class MainActivity extends BaseActivity
             case R.id.menu_my_account_button:
                 break;
             case R.id.menu_settings_button:
+                createRoom();
                 break;
             case R.id.menu_logout_button:
 
@@ -230,10 +252,8 @@ public class MainActivity extends BaseActivity
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     initFirebase();
                                     GenericTypeIndicator<String> stringIndicator = new GenericTypeIndicator<String>(){};
-
                                     Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                                     intent.putExtra(User.class.getSimpleName(), new User(
-
                                             dataSnapshot.getKey(),
                                             dataSnapshot.child("alias").getValue(stringIndicator),
                                             dataSnapshot.child("email").getValue(stringIndicator),
@@ -241,7 +261,6 @@ public class MainActivity extends BaseActivity
                                             dataSnapshot.child("last_name").getValue(stringIndicator),
                                             dataSnapshot.child("phone_number").getValue(stringIndicator),
                                             dataSnapshot.child("image_base64").getValue(stringIndicator)
-
                                     ));
 
                                     startActivity(intent);
@@ -251,11 +270,6 @@ public class MainActivity extends BaseActivity
                                 }
                             });
                 }
-
-
-
-
-
                 break;
             case R.id.nav_my_settings:
                 break;

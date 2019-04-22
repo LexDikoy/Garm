@@ -1,6 +1,9 @@
 package lexdikoy.garm.UI;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +20,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +43,8 @@ import lexdikoy.garm.Model.Room;
 import lexdikoy.garm.Model.User;
 import lexdikoy.garm.Model.UserAdapter;
 import lexdikoy.garm.R;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class ChatActivity extends BaseActivity {
 
@@ -73,14 +81,8 @@ public class ChatActivity extends BaseActivity {
         buttonAttacjFileMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
             }
         });
-
-        buildUsersList();
         writeMessage();
     }
 
@@ -106,15 +108,13 @@ public class ChatActivity extends BaseActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         GenericTypeIndicator<String> indicator = new GenericTypeIndicator<String>(){};
                         GenericTypeIndicator<Long> indicatorLong = new GenericTypeIndicator<Long>(){};
-
-
                         messages.add(new Message(
                                 dataSnapshot.child("author").getValue(indicator),
                                 dataSnapshot.child("textMessage").getValue(indicator)
                                         ));
                         messages.get(messages.size()-1).setTimeMessage(dataSnapshot.child("timeMessage").getValue(indicatorLong));
 
-                        MessageAdapter messageAdapter = new MessageAdapter(messages, users, ChatActivity.this);
+                        MessageAdapter messageAdapter = new MessageAdapter(messages, ChatActivity.this);
                         chatView.setAdapter(messageAdapter);
 
 
@@ -142,37 +142,26 @@ public class ChatActivity extends BaseActivity {
                 });
     }
 
-
-
-    private void buildUsersList() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         initFirebase();
-        if (currentUser != null) {
-            garmDataBaseReference
-                    .child("users")
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            users.clear();
-                            GenericTypeIndicator<String> indicator = new GenericTypeIndicator<String>(){};
-                            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                                if(!currentUser.getUid().equals(childDataSnapshot.getKey())) {
-
-                                    users.add(new User(childDataSnapshot.getKey(),
-                                            childDataSnapshot.child("alias").getValue(indicator),
-                                            childDataSnapshot.child("email").getValue(indicator),
-                                            childDataSnapshot.child("first_name").getValue(indicator),
-                                            childDataSnapshot.child("last_name").getValue(indicator),
-                                            childDataSnapshot.child("phone_number").getValue(indicator),
-                                            childDataSnapshot.child("image_base64").getValue(indicator)));
-                                }
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+        if (room.roomMaster.equals(currentUser.getUid())) {
+            getMenuInflater().inflate(R.menu.chat_menu, menu);
         }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_rename_room_button:
+
+                break;
+            case R.id.menu_delete_room_button:
+                deleteRoom();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -182,6 +171,42 @@ public class ChatActivity extends BaseActivity {
 
 
 
+    private void deleteRoom() {
+        initFirebase();
+        AlertDialog.Builder alertDialog;
+        String buttonYes = "  Да  ";
+        String buttonNo = "  Нет  ";
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Подтверждение действия");
+        alertDialog.setMessage("Вы хотите удалить профиль?");
+        alertDialog.setPositiveButton(buttonYes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                garmDataBaseReference
+                        .child("rooms/" + room.getRoomID())
+                        .removeValue()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    startActivity(new Intent(ChatActivity.this, MainActivity.class));
 
+                                } else {
+                                    toastMessage(task.getException().getMessage());
+                                }
+                            }
+                        });
 
+            }
+        });
+        alertDialog.setNegativeButton(buttonNo, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+            }
+        });
+        alertDialog.setCancelable(true);
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+        alertDialog.show();
+    }
 }
