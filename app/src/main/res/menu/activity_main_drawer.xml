@@ -11,9 +11,9 @@
             android:icon="@drawable/ico_profile"
             android:title="Мой профиль" />
         <item
-            android:id="@+id/nav_my_settings"
+            android:id="@+id/nav_my_jira"
             android:icon="@drawable/ico_settings"
-            android:title="Настройки" />
+            android:title="Jira" />
         <item
             android:id="@+id/nav_planing"
             android:icon="@drawable/ico_plan"

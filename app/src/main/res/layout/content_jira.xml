@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".UI.JiraActivity"
+    tools:showIn="@layout/activity_jira"
+    android:background="@drawable/side_back">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/jira_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:switchPadding="5dp"
+            android:text="Только мои задачи"
+            android:textColor="@color/colorAccent"
+            app:layout_anchor="@+id/appBarLayout"
+            app:layout_anchorGravity="right|center"
+            tools:layout_editor_absoluteX="237dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_jira_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="27dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

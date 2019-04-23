@@ -52,6 +52,7 @@ import lexdikoy.garm.Model.Room;
 import lexdikoy.garm.Model.RoomAdapter;
 import lexdikoy.garm.Model.User;
 import lexdikoy.garm.Model.UserAdapter;
+import lexdikoy.garm.UI.JiraActivity;
 import lexdikoy.garm.UI.LoginActivity;
 import lexdikoy.garm.UI.RegisterActivity;
 import lexdikoy.garm.UI.UserProfile;
@@ -271,7 +272,10 @@ public class MainActivity extends BaseActivity
                             });
                 }
                 break;
-            case R.id.nav_my_settings:
+            case R.id.nav_my_jira:
+
+                startActivity(new Intent(this, JiraActivity.class));
+
                 break;
             case R.id.nav_planing:
                 break;
